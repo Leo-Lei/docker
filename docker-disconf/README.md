@@ -59,3 +59,6 @@ docker run --name disconf-nginx -v ${PWD}/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v ${PWD}/logs:/home/work/var/logs/disconf -d -p 8081:8081 --link disconf-app:disconf-app nginx:1.9
 ```
 所有容器启动正常以后，就可以通过[http://yourhost:8081](http://)访问Disconf-web服务了。Disconf的客户端需要访问zookeeper，所以在配置Disconf的客户端时请配置hosts文件，将主机名disconf-zoo映射到Docker所在的服务器上。
+
+注意
+在disconf-build/config/zoo.properties中，hosts=XXXX这里需要配置成本地host机器的ip
