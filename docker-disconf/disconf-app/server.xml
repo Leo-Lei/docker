@@ -121,8 +121,9 @@
                resourceName="UserDatabase"/>
       </Realm>
 
-      <Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true">
-        <Context path="" docBase="/opt/disconf-war"></Context>
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
+<Context path="" docBase="/home/work/dsp/disconf-rd/war"></Context>
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
         <!--
