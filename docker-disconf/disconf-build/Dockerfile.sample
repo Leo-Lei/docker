@@ -1,12 +1,12 @@
 FROM maven
 MAINTAINER leiwei <leiwei2094@gmail.com>
 ENV REFRESHED_AT 2017-01-19
-RUN curl -fSL https://github.com/knightliao/disconf/archive/2.6.36.zip -o 2.6.36.zip
-RUN unzip 2.6.36.zip
+RUN curl -fSL ${disconf_download_url} -o disconf.zip
+RUN unzip disconf.zip
 ENV ONLINE_CONFIG_PATH /home/work/dsp/disconf-rd/online-resources
 ENV WAR_ROOT_PATH /home/work/dsp/disconf-rd/working/war
-RUN cd disconf-2.6.36/disconf-web
+RUN cd disconf-2.6.36.1/disconf-web
 # VOLUME /home/work/dsp/disconf-rd/online-resources
 # VOLUME /home/work/dsp/disconf-rd/working
-WORKDIR disconf-2.6.36/disconf-web
+WORKDIR disconf-2.6.36.1/disconf-web
 CMD ["sh", "deploy/deploy.sh"]
