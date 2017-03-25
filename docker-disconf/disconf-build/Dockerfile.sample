@@ -5,8 +5,8 @@ RUN curl -fSL ${disconf_download_url} -o disconf.zip
 RUN unzip disconf.zip
 ENV ONLINE_CONFIG_PATH /home/work/dsp/disconf-rd/online-resources
 ENV WAR_ROOT_PATH /home/work/dsp/disconf-rd/working/war
-RUN cd disconf-2.6.36.1/disconf-web
+RUN cd ${disconf_archive_top_dir}/disconf-web
 # VOLUME /home/work/dsp/disconf-rd/online-resources
 # VOLUME /home/work/dsp/disconf-rd/working
-WORKDIR disconf-2.6.36.1/disconf-web
+WORKDIR ${disconf_archive_top_dir}/disconf-web
 CMD ["sh", "deploy/deploy.sh"]
