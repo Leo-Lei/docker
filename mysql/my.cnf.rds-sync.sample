@@ -1,21 +1,32 @@
-# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; version 2 of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-
 [mysqld]
+
+#datadir=/opt/mysql/mysql-1
+
+server-id=${server-id}                                        --server-id需保证唯一
+master-info-repository=file
+relay-log-info_repository=file
+binlog-format=ROW
+gtid-mode=on                                       --开启gtid模式
+log_slave_updates=1   
+enforce-gtid-consistency=true
+log-bin=mysql-bin                                  --binlog文件存储的路径
+
+replicate-wild-ignore-table=mysql.%
 character-set-server=utf8
+
+innodb_checksum_algorithm=innodb                   --从RDS的备份的backup.my中拷贝过来
+#innodb_log_checksum_algorithm=innodb              --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
+innodb_data_file_path=ibdata1:200M:autoextend      --从RDS的备份的backup.my中拷贝过来
+innodb_log_files_in_group=2                        --从RDS的备份的backup.my中拷贝过来
+innodb_log_file_size=1572864000                    --从RDS的备份的backup.my中拷贝过来
+#innodb_fast_checksum=false                        --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
+#innodb_page_size=16384                            --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
+#innodb_log_block_size=512                         --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
+innodb_undo_directory=.                            --从RDS的备份的backup.my中拷贝过来
+innodb_undo_tablespaces=0                          --从RDS的备份的backup.my中拷贝过来
+
+#rds_encrypt_data=false                            --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
+#innodb_encrypt_algorithm=aes_128_ecb              --从RDS的备份的backup.my中拷贝过来,但是RDS特有的配置，需注释掉
 
 [mysql]
 default-character-set=utf8
