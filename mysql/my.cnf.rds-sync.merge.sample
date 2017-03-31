@@ -1,10 +1,10 @@
 [mysqld]
 server-id=${server-id}
-binlog-format=ROW
+# binlog-format=ROW
 gtid-mode=on
-log_slave_updates=1
+# log_slave_updates=1
 enforce-gtid-consistency=true
-log-bin=mysql-bin
+# log-bin=mysql-bin
 master_info_repository=TABLE
 relay_log_info_repository=TABLE
 
