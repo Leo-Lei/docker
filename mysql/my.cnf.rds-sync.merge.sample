@@ -11,6 +11,8 @@ relay_log_info_repository=TABLE
 replicate-wild-ignore-table=mysql.%
 character-set-server=utf8
 
+innodb_flush_log_at_trx_commit = 0
+
 [mysql]
 default-character-set=utf8
 
