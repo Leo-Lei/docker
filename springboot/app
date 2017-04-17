@@ -13,7 +13,7 @@
 
 ## Fill in name of program here.
 SERVICE_NAME=app
-EXEC_START="java -jar /opt/app.jar"
+EXEC_START="java -jar ${JAVA_OPTS} /opt/app.jar"
 PID_PATH="/var/run/"
 
 start() {
