@@ -15,7 +15,7 @@
 SERVICE_NAME=app
 EXEC_START="java -jar $JAVA_OPTS /opt/app.jar &"
 
-function start() {
+start() {
     pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
     if [ "$pidlist" = "" ]
         then
@@ -34,7 +34,7 @@ function start() {
 #     echo "$SERVICE_NAME started, pid is $pid"
 }
 
-function stop() {
+stop() {
     echo "begin stop"
     pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
     if [ "$pidlist" = "" ]
