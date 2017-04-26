@@ -14,34 +14,37 @@
 ## Fill in name of program here.
 SERVICE_NAME=app
 EXEC_START="java -jar $JAVA_OPTS /opt/app.jar"
-PID_PATH="/var/run/"
+# PID_PATH="/var/run/"
 
 start() {
-    if [ -e "$PID_PATH/$SERVICE_NAME.pid" ]; then
-        ## Program is running, exit with error.
-        echo "Error! $PROG is currently running!" 1>&2
-        exit 1
+    pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
+    if [ "$pidlist" = "" ]
+        then
+            echo "no old pid alive, start new service ......"
     else
-        ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
-        $EXEC_START 2>&1 >/var/log/$SERVICE_NAME &
-        pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
-        echo "$SERVICE_NAME started"
-        echo $pid > "$PID_PATH/$SERVICE_NAME.pid"
+        ## Program is running, so stop it
+        echo "old pid exists: $pidlist. First stop old pids"
+        # pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
+        kill -9 $pidlist
+        echo "$SERVICE_NAME stopped"
     fi
+    ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
+    $EXEC_START 2>&1 >/var/log/$SERVICE_NAME &
+    pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
+    echo "$SERVICE_NAME started, pid is $pid"
 }
 
 stop() {
     echo "begin stop"
-    if [ -e "$PID_PATH/$SERVICE_NAME.pid" ]; then
-        ## Program is running, so stop it
-        pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
-        kill -9 $pid
-        rm -f  "$PID_PATH/$SERVICE_NAME.pid"
-        echo "$SERVICE_NAME stopped"
+    pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
+    if [ "$pidlist" = "" ]
+        then
+            echo "no old pid alive, already stopped!"
     else
-        ## Program is not running, exit with error.
-        echo "Error! $SERVICE_NAME not started!" 1>&2
-        exit 1
+        ## Program is running, so stop it
+        echo "old pid exists: $pidlist"
+        kill -9 $pidlist
+        echo "$SERVICE_NAME stopped"
     fi
 }
 
