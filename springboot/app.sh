@@ -13,10 +13,9 @@
 
 ## Fill in name of program here.
 SERVICE_NAME=app
-EXEC_START="java -jar $JAVA_OPTS /opt/app.jar"
-# PID_PATH="/var/run/"
+EXEC_START="java -jar $JAVA_OPTS /opt/app.jar &"
 
-start() {
+function start() {
     pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
     if [ "$pidlist" = "" ]
         then
@@ -28,13 +27,14 @@ start() {
         kill -9 $pidlist
         echo "$SERVICE_NAME stopped"
     fi
+    echo $EXEC_START
     ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
-    $EXEC_START 2>&1 >/var/log/$SERVICE_NAME &
-    pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
-    echo "$SERVICE_NAME started, pid is $pid"
+#     $EXEC_START 2>&1 >/var/log/$SERVICE_NAME &
+#     pid=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
+#     echo "$SERVICE_NAME started, pid is $pid"
 }
 
-stop() {
+function stop() {
     echo "begin stop"
     pidlist=`ps -ef | grep '/opt/app.jar' |grep -v "grep"|awk '{print $2}'`
     if [ "$pidlist" = "" ]
@@ -48,12 +48,12 @@ stop() {
     fi
 }
 
-## Check to see if we are running as root first.
-## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
-if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root" 1>&2
-    exit 1
-fi
+# ## Check to see if we are running as root first.
+# ## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
+# if [ "$(id -u)" != "0" ]; then
+#     echo "This script must be run as root" 1>&2
+#     exit 1
+# fi
 
 case "$1" in
     start)
